@@ -30,21 +30,19 @@ if [ ! -d "$MOUNT_POINT" ]; then
     fi
 fi
 
-# Mount the smart folder as a drive using SMB
-mount -t smbfs "$SMART_FOLDER" "$MOUNT_POINT"
+# Open the smart folder to automatically mount it
+open -a Finder "$SMART_FOLDER"
 
-# Check if the mount operation was successful
-if [ $? -eq 0 ]; then
-    echo "Smart folder mounted successfully at $MOUNT_POINT"
-    
-    # Create symbolic links to the contents of the smart folder
-    for item in "$SMART_FOLDER"/*; do
-        ln -s "$item" "$MOUNT_POINT/$(basename "$item")"
-    done
-    
-    echo "Symbolic links created to the contents of the smart folder"
-else
-    echo "Failed to mount the smart folder"
-    # Clean up the created mount point directory
-    rmdir "$MOUNT_POINT"
-fi
+# Wait for the smart folder to be mounted
+while [ ! -d "$MOUNT_POINT" ]; do
+    sleep 1
+done
+
+echo "Smart folder mounted successfully at $MOUNT_POINT"
+
+# Create symbolic links to the contents of the smart folder
+for item in "$SMART_FOLDER"/*; do
+    ln -s "$item" "$MOUNT_POINT/$(basename "$item")"
+done
+
+echo "Symbolic links created to the contents of the smart folder"
