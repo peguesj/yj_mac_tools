@@ -29,6 +29,11 @@ function update_links() {
     local saved_search_path=$1
     local link_path=$2
 
+    # Check if the link directory exists, create it if it doesn't
+    if [ ! -d "$link_path" ]; then
+        mkdir -p "$link_path"
+    fi
+
     # Create new links
     mdfind -0 -onlyin "$saved_search_path" . | while IFS= read -r -d '' file; do
         link_check["$file"]=true
@@ -44,13 +49,19 @@ function update_links() {
 }
 
 # Main script
-while getopts "u:" opt; do
+while getopts "s:u:" opt; do
     case "$opt" in
+        s)
+            saved_search_path="$OPTARG"
+            ;;
         u)
-            update_links "/path/to/.savedSearch" "$OPTARG"
+            link_path="$OPTARG"
             ;;
         *)
             echo "Invalid option: -$OPTARG" >&2
             ;;
     esac
 done
+
+# Call the function with the provided parameters
+update_links "$saved_search_path" "$link_path"
