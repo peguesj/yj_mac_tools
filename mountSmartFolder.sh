@@ -64,8 +64,8 @@ fi
 file_count=$(find "$SMART_FOLDER" -type f | wc -l)
 echo "Number of files to be created: $file_count"
 
-# Mount the smart folder as a drive
-mount -t smbfs "$SMART_FOLDER" "$MOUNT_POINT"
+# Mount the smart folder as a drive using AFP
+mount_afp "$SMART_FOLDER" "$MOUNT_POINT"
 
 # Check if the mount operation was successful
 if [[ $? -eq 0 ]]; then
