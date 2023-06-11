@@ -1,45 +1,48 @@
-Here's a README.md that suits your requirements:
-
 ---
 
-# Symbolic Link Management Script
+# SmartFolderToSymbolicLink (Refactored)
 Author: Jeremiah Pegues  
 License: GNU General Public License v3.0  
-Version: 1.0.0  
+Version: 1.1.0  
 
 ## Description:
 
-This bash script creates symbolic links for all files found within a macOS Smart Folder (savedSearch) to another directory. If a link exists already and is pointing to the same file, no new link is created. If a link exists but points to a different file, a new link is created with an incremented suffix before the file extension.
+The script `smartFolderToSymbolicLink.sh` is an optimized version of the original Symbolic Link Management Script. This script creates symbolic links for all files found within a macOS Smart Folder (savedSearch) to another directory.
 
-The script includes options to check symbolic links for validity. If a symbolic link is broken, it can either print a message or automatically remove the broken link based on the command-line argument passed.
+If a link exists already and points to the same file, no new link is created. However, if a link exists but points to a different file, a new link is created with an incremented suffix before the file extension.
 
-Additionally, an update function removes all links in a target directory and replaces them with new links representing the contents of the .savedsearch file at runtime.
+This refactored version brings significant performance improvements by reducing unnecessary file system calls and efficiently handling file removals and additions when updating the links. It ensures quicker script execution, especially when dealing with a large number of files in the savedSearch, and only a few files change between updates.
+
+## Prerequisites:
+* macOS or any Unix-like operating system
+* Bash shell (the script may not be compatible with other shells)
 
 ## Usage:
 
 Make the script executable:
 
-```zsh|{type:'command'}
-chmod +x smartFolderToSymbolikLink.sh
+```
+chmod +x smartFolderToSymbolicLink.sh
 ```
 
 Run the script with the desired option:
 
 * `-u <link_path>` - Update links. Replace `<link_path>` with the path to the folder where you want the links to be created.
-* `-r <link_path>` - Validate and remove broken links. Replace `<link_path>` with the path to the folder with the links.
-* `-v <link_path>` - Validate and print broken links without removing them.
 
 Example:
 
-```zsh|{type:'command'}
-./smartFolderToSymbolikLink.sh -u /path/to/link_folder
+```
+./smartFolderToSymbolicLink.sh -u /path/to/link_folder
 ```
 
 This will create symbolic links for all files in the savedSearch folder into the specified link_folder. If any links already exist, they will be updated according to the rules described above.
 
+## Compatibility:
+The script has been written for and tested on the Bash shell, which is the default shell on macOS and most Unix-like systems. If you're using a different shell, please switch to Bash before running the script.
+
 ## Disclaimer:
 
-Please ensure you back up your data before running this or any other script that modifies the file system. Although this script has been designed with safety in mind, there's always the potential for unintended side effects when modifying files and directories, particularly when those operations are automated.
+Please ensure you back up your data before running this or any other script that modifies the file system. While this script has been designed with safety in mind, there's always the potential for unintended side effects when modifying files and directories, particularly when those operations are automated.
 
 ---
 
