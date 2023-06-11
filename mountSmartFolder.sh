@@ -18,6 +18,10 @@ while [[ $# -gt 0 ]]; do
         NEW_VOLUME=true
         shift
         ;;
+        --confirm-contents)
+        CONFIRM_CONTENTS=true
+        shift
+        ;;
         *)
         echo "Invalid option: $1"
         exit 1
@@ -27,7 +31,7 @@ done
 
 # Check if the required arguments are provided
 if [[ -z "$SMART_FOLDER" ]] || [[ -z "$MOUNT_POINT" ]]; then
-    echo "Missing required arguments. Usage: mountSmartFolder.sh -f <smart_folder_path> -m <mount_point_path> [--new-volume]"
+    echo "Missing required arguments. Usage: mountSmartFolder.sh -f <smart_folder_path> -m <mount_point_path> [--new-volume] [--confirm-contents]"
     exit 1
 fi
 
@@ -63,6 +67,15 @@ fi
 # Get the number of files to be created
 file_count=$(find "$SMART_FOLDER" -type f | wc -l)
 echo "Number of files to be created: $file_count"
+
+# Prompt for confirmation if --confirm-contents flag is set
+if [[ -n "$CONFIRM_CONTENTS" ]]; then
+    read -p "Do you want to continue and create symbolic links to the contents of the smart folder? (y/n): " choice
+    if [[ "$choice" != "y" ]] && [[ "$choice" != "Y" ]]; then
+        echo "Operation cancelled."
+        exit 0
+    fi
+fi
 
 # Mount the smart folder as a drive using AFP
 mount_afp "$SMART_FOLDER" "$MOUNT_POINT"
