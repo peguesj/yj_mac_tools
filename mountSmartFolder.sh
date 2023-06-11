@@ -31,7 +31,7 @@ if [ ! -d "$MOUNT_POINT" ]; then
 fi
 
 # Mount the smart folder as a drive using SMB
-mount_smbfs "$SMART_FOLDER" "$MOUNT_POINT"
+mount -t smbfs "$SMART_FOLDER" "$MOUNT_POINT"
 
 # Check if the mount operation was successful
 if [ $? -eq 0 ]; then
