@@ -1,0 +1,2 @@
+ln -s ./dupe.sh /usr/local/bin/dupe
+cp ./Automator/duke.workflow ~/Library/Services
