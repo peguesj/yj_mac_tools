@@ -1,6 +1,6 @@
 # Duplicate File Finder and Remover
 
-**Version:** 1.0  
+**Version:** 1.1  
 **Publish Date:** August 20, 2023  
 **Author:** Jeremiah Pegues  
 **Email:** jeremiah@pegues.io  
@@ -11,9 +11,10 @@ Duplicate File Finder and Remover is a shell script that helps you identify and 
 ## Usage
 
 ```bash
-./dupe.sh <folder1> <folder2> [--exclude <excluded_folder>] [--script <script_file>]
+./dupe.sh [--remove-all <folder>] <folder1> <folder2> [--exclude <excluded_folder>] [--script <script_file>]
 ```
 
+- `--remove-all <folder>`: (Optional) Remove all duplicate files from the specified folder (folder1 or folder2).
 - `<folder1>`: The first directory to compare.
 - `<folder2>`: The second directory to compare.
 - `--exclude <excluded_folder>`: (Optional) Exclude a specific subdirectory from the comparison.
@@ -21,6 +22,6 @@ Duplicate File Finder and Remover is a shell script that helps you identify and 
 
 ## License
 
-This project is licensed under the [GNU General Public License v3.0](LICENSE). Feel free to use and modify it according to the terms of the license.
+This project is licensed under the GNU General Public License v3.0. Feel free to use and modify it according to the terms of the license.
 
 For any inquiries or support, please contact Jeremiah Pegues at jeremiah@pegues.io.

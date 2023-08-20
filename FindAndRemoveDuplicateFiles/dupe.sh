@@ -30,7 +30,6 @@ display_progress() {
 
     log_message "Progress: [$current_index/$total_files] ($percentage%), Time: $timestamp"
 }
-
 # Print usage instructions when -h flag is used
 if [ "$1" == "-h" ]; then
     log_message "Usage: $0 [folder1] [folder2] [exclude_directory]"
@@ -125,7 +124,28 @@ if [ "$generating_script" != "true" ]; then
 
     log_message "Found $total_files duplicate files."
 
-
+# Check if --remove-all flag is used
+if [ "$1" == "--remove-all" ]; then
+    remove_all_folder="$2"
+    case "$remove_all_folder" in
+        "folder1")
+            log_message "Removing all duplicate files from $folder1"
+            for file_to_remove in "${duplicate_array[@]}"; do
+                rm "$folder1/$file_to_remove"
+                log_message "File removed from $folder1: $file_to_remove"
+            done
+            exit 0;;
+        "folder2")
+            log_message "Removing all duplicate files from $folder2"
+            for file_to_remove in "${duplicate_array[@]}"; do
+                rm "$folder2/$file_to_remove"
+                log_message "File removed from $folder2: $file_to_remove"
+            done
+            exit 0;;
+        *)
+            log_message "Invalid folder specified for --remove-all. Use 'folder1' or 'folder2'.";;
+    esac
+fi
 # Loop through duplicate files
 for ((i = 0; i < ${#duplicate_array[@]}; i++)); do
     selected_file="${duplicate_array[$i]}"
