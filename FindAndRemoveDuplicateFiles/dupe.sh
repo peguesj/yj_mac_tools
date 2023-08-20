@@ -45,26 +45,57 @@ if [ "$1" == "--script" ]; then
     generating_script="true"
     shift 2
 fi
+# Version, publish date, author, email, and license
+VERSION="1.2"
+PUBLISH_DATE=$(date +"%b %d, %Y")
+AUTHOR="Jeremiah Pegues"
+EMAIL="jeremiah@pegues.io"
+LICENSE="GNU General Public License v3.0"
 
+# Print version, publish date, author, email, and license
 log_message "Duplicate File Finder and Remover"
+log_message "Version: $VERSION"
+log_message "Publish Date: $PUBLISH_DATE"
+log_message "Author: $AUTHOR"
+log_message "Email: $EMAIL"
+log_message "License: $LICENSE"
 
-# Check if enough folder paths are provided as arguments
-if [ -z "$1" ] || [ -z "$2" ]; then
-    log_message "Usage: $0 [folder1] [folder2] [exclude_directory] (use -h for help)"
-    exit 1
-fi
+if [ ! "$1" == "--remove-all" ]; then
 
-folder1="$1"
-folder2="$2"
+    # Check if enough folder paths are provided as arguments
+    if [ -z "$2" ] || [ -z "$3" ]; then
+        log_message "Usage: $0 [folder1] [folder2] [exclude_directory] (use -h for help)"
+        exit 1
+    fi
 
-# Check if exclude directory is provided as an argument
-if [ ! -z "$3" ]; then
-    exclude_directory="$3"
-    log_message "Excluding directory $exclude_directory from comparison."
+    folder1="$2"
+    folder2="$3"
+
+    # Check if exclude directory is provided as an argument
+    if [ ! -z "$4" ]; then
+        exclude_directory="$4"
+        log_message "Excluding directory $exclude_directory from comparison."
+    else
+        exclude_directory=""
+    fi
 else
-    exclude_directory=""
-fi
+     # Check if enough folder paths are provided as arguments
+    if [ -z "$3" ] || [ -z "$4" ]; then
+        log_message "Usage: $0 [folder1] [folder2] [exclude_directory] (use -h for help)"
+        exit 1
+    fi
 
+    folder1="$3"
+    folder2="$4"
+
+    # Check if exclude directory is provided as an argument
+    if [ ! -z "$5" ]; then
+        exclude_directory="$5"
+        log_message "Excluding directory $exclude_directory from comparison."
+    else
+        exclude_directory=""
+    fi   
+fi
 # List of system directories to ignore
 ignore_list=".Trashes .Spotlight-V100 .fseventsd .TemporaryItems .DocumentRevisions-V100 .Sarasota"
 
